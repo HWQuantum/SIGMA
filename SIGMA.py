@@ -158,7 +158,7 @@ def single_SIGMA_path(image, model, target_class, beta, alpha, epsilon, preproce
 
 
 @tf.function
-def single_SIGMA_path_adaptive(image, model, target_class, beta, epsilon, preprocess_fn):
+def single_SIGMA_path_adaptive(image, model, target_class,  alpha_range, beta, epsilon, preprocess_fn):
     """Computes a SIGMA path with adaptive alpha, returning the attribution for that path 
 
     Args:
@@ -175,6 +175,10 @@ def single_SIGMA_path_adaptive(image, model, target_class, beta, epsilon, prepro
     shape = tf.shape(image)
     estimate_SIGMA = tf.identity(image)
     attribution = tf.zeros_like(image)
+    
+    # for adaptive alpha range
+    min_bound = tf.convert_to_tensor(alpha_range[0], dtype=tf.float32)
+    max_bound = tf.convert_to_tensor(alpha_range[1], dtype=tf.float32)
 
     prev_estimate_SIGMA = tf.identity(image)
     prev_perturbation_grad = tf.zeros_like(image) 
@@ -207,8 +211,6 @@ def single_SIGMA_path_adaptive(image, model, target_class, beta, epsilon, prepro
 
         adaptive_alpha = numerator/denominator
         
-        max_bound = 1
-        min_bound = 0.5
         adaptive_alpha_prime = tf.clip_by_value(adaptive_alpha, min_bound, max_bound)
 
         updated_estimate_SIGMA = estimate_SIGMA - adaptive_alpha_prime * perturbation_grad
@@ -291,7 +293,7 @@ def SIGMA_attribution(model, image, target_class, n, beta, alpha, epsilon, prepr
 
 
 @tf.function
-def SIGMA_attribution_adaptive(model, image, target_class, n, beta, epsilon, preprocess_fn):
+def SIGMA_attribution_adaptive(model, image, target_class, n, alpha_range, beta, epsilon, preprocess_fn):
     """Computes the SIGMA attribution for n paths with adaptive alpha
 
     Args:
@@ -299,6 +301,7 @@ def SIGMA_attribution_adaptive(model, image, target_class, n, beta, epsilon, pre
         model: model to be explained
         target_class: class of interest
         n: number of paths to average over 
+        alpha_range:(min_alpha, max_alpha) for adaptive alpha bounds
         beta: perturbation magnitude
         epsilon: stopping criteria
         preprocess_fn: preprocessing required for specified model
@@ -307,7 +310,7 @@ def SIGMA_attribution_adaptive(model, image, target_class, n, beta, epsilon, pre
         final averaged attribution map over n paths, the confidence of the model at each step in each path, the image at the end of the each SIGMA path
     """
     def parallel_body(_):
-        return single_SIGMA_path_adaptive(image, model, target_class, beta, epsilon, preprocess_fn)
+        return single_SIGMA_path_adaptive(image, model, target_class, alpha_range, beta, epsilon, preprocess_fn)
 
     paths = tf.range(n)
     all_results = tf.map_fn(
