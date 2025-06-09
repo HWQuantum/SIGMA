@@ -1,22 +1,35 @@
 ## SIGMA: Self-guided Integrated Gradient Method for Attribution
 <p align="center"><em>A path-based attribution method guided by stochastic perturbations</em></p>
 
----
 
-## Updates
+## ✨ Updates
 - **09/06/2025** – Initial SIGMA code released with example notebook and test images.
 
----
 
-## Overview
+## 🔍 Overview
 
 SIGMA (Self-guided Integrated Gradient Method for Attribution) is a path-based explainable AI (XAI) method designed to identify which input features most influence a model's prediction.
 
 Unlike traditional Integrated Gradients [1], SIGMA uses the Simultaneous Perturbation Stochastic Approximation (SPSA) algorithm [2] to dynamically guide the integration path. This avoids reliance on a fixed baseline and enables more informative, input-specific paths.
 
----
 
-## Usage
+## 🚀 Installation
+
+Clone the repository:
+
+```python
+git clone https://github.com/HWQuantum/SIGMA.git
+cd SIGMA
+```
+
+Install dependencies:
+
+```python
+pip install -r requirements.txt
+```
+
+
+## 💡 Usage
 
 Our method is implemented in [`SIGMA.py`](SIGMA.py), and a full demo is available in the [`SIGMA_example.ipynb`](SIGMA_example.ipynb) notebook.
 
@@ -41,22 +54,19 @@ attribution = SIGMA_attribution(model, image, target_class, n, beta, alpha, epsi
 
 ```
 
----
-## Acknowledgements
+## 🤝 Acknowledgements
 
 The following libraries and resources were used in benchmarking SIGMA against existing attribution methods:
 
 - [**Saliency** by PAIR](https://github.com/PAIR-code/saliency): This library was used to run and compare SIGMA against other saliency-based explainability methods such as Integrated Gradients and Guided Integrated Gradients.
 
 - [**XAI-BENCH**](https://github.com/XAIdataset/XAIdataset.github.io): We used XAI-BENCH benchmark datasets and quantitative alignment metrics to evaluate SIGMA’s attribution performance against established XAI methods.
----
 
-## References
+## 📚 References
 
 1. Sundararajan, M., Taly, A., & Yan, Q. (2017). *Axiomatic Attribution for Deep Networks*. In Proceedings of the 34th International Conference on Machine Learning (ICML). [arXiv:1703.01365](https://arxiv.org/abs/1703.01365)
 
 2. Spall, J.C. (1992). *Multivariate Stochastic Approximation Using a Simultaneous Perturbation Gradient Approximation*. IEEE Transactions on Automatic Control, 37(3), 332–341. [DOI:10.1109/9.119632](https://doi.org/10.1109/9.119632)
 
----
 
 
