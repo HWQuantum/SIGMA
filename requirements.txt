@@ -1,4 +1,11 @@
-tensorflow>=2.11
+# Core
 numpy
 matplotlib
 jupyterlab
+
+# For TensorFlow SIGMA
+tensorflow>=2.11
+
+# For PyTorch SIGMA
+torch>=2.0
+torchvision>=0.15
