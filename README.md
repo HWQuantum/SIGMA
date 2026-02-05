@@ -3,8 +3,15 @@
 
 
 ## ✨ Updates
+- **05/02/2026** - Pytorch implementation released
 - **09/06/2025** – Initial SIGMA code released with example notebook and test images.
 
+## 📄 Preprint
+
+**Henry, S., Ruget, A., Scholes, S., & Leach, J. (2025).**  
+*Self-Guided Integrated Gradient Method for Attribution.*  
+TechRxiv preprint.  
+https://www.techrxiv.org/users/934593/articles/1305741-self-guided-integrated-gradient-method-for-attribution
 
 ## 🔍 Overview
 
@@ -31,12 +38,14 @@ pip install -r requirements.txt
 
 ## 💡 Usage
 
-Our method is implemented in [`SIGMA.py`](SIGMA.py), and a full demo is available in the [`SIGMA_example.ipynb`](SIGMA_example.ipynb) notebook.
+Our method is implemented in [`SIGMA_tf.py`](SIGMA_tf.py), and a full demo is available in the [`SIGMA_example.ipynb`](SIGMA_example.ipynb) notebook.
+
+For a Pytorch implementation see [`SIGMA_torch.py`](SIGMA_torch.py)
 
 To use SIGMA in your own project:
 
 ```python
-from SIGMA import SIGMA_attribution
+from SIGMA_tf import SIGMA_attribution
 
 # Example usage for a given model and image
 
